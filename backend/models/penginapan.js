@@ -6,6 +6,8 @@ const penginapanSchema = new mongoose.Schema({
     harga_penginapan: Number,
     deskripsi_penginapan: String,
     foto_penginapan: String,
+    fasilitas_penginapan: String,
+    rating: String,
     userID: {
         type: mongoose.ObjectId,
         ref: 'User'
@@ -14,6 +16,12 @@ const penginapanSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
+    kategori: {
+        type: String,
+        enum: ['hotel', 'villa', 'kostan'], 
+        required: true,
+    },
+
 });
 
 const Penginapan = mongoose.model('Penginapan', penginapanSchema);

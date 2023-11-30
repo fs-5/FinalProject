@@ -14,7 +14,24 @@ module.exports = {
     getPenginapanById: (req,res) => {
 
     },
+    getAllPenginapanByCategory: async (req, res) => {
+        try {
+            const { kategori } = req.params;
+            const penginapans = await Penginapan.find({ kategori: kategori });
+
+            res.json({
+                message: `Berhasil mendapatkan data penginapan kategori ${kategori}`,
+                data: penginapans,
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                error: 'Terjadi Kesalahan Internal Server',
+            });
+        }
+    },
     createPenginapan: async (req, res) => {
+        console.log('Request Body:', req.body); 
         try {
                 // Ambil data penginapan dari body permintaan
                 const data = req.body;
