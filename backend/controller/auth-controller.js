@@ -28,8 +28,31 @@ module.exports = {
 }
 
     }, 
-    regis: (req, res) => {
-        // Implement registration logic here
+    regis: async (req, res) => {
+        try {
+            const { nama, username, email, no_telpon, password } = req.body;
+      
+            // Cek apakah semua field yang dibutuhkan disertakan
+            if (!nama || !username || !email || !no_telpon || !password) {
+              return res.status(400).json({ error: 'Semua field harus diisi' });
+            }
+      
+            // Cek apakah email atau username sudah digunakan
+            const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+            if (existingUser) {
+              return res.status(400).json({ error: 'Email atau username sudah digunakan' });
+            }
+      
+            // Buat instansi user baru
+            const newUser = new User({ nama, username, email, no_telpon, password });
+      
+            // Simpan user ke database
+            await newUser.save();
+      
+            res.json({ message: 'Registrasi berhasil' });
+          } catch (error) {
+            res.status(500).json({ error: 'Internal Server Error' });
+          }
     }
     
 };

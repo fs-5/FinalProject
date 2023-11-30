@@ -1,17 +1,21 @@
 const mongoose = require("mongoose");
 
 const penginapanSchema = new mongoose.Schema({
-    nama_penginapan:String,
-    lokasi_penginapan:String,
-    harga_penginapan:Number,
-    deskripsi_penginapan:String,
-    foto_penginapan:String,
-    userID:{
+    nama_penginapan: String,
+    lokasi_penginapan: String,
+    harga_penginapan: Number,
+    deskripsi_penginapan: String,
+    foto_penginapan: String,
+    userID: {
         type: mongoose.ObjectId,
         ref: 'User'
-    }  
-})
+    },
+    wishlistBy: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+});
 
-const Penginapan = mongoose.model('Penginapan', penginapanSchema)
+const Penginapan = mongoose.model('Penginapan', penginapanSchema);
 
-module.exports = Penginapan
+module.exports = Penginapan;
