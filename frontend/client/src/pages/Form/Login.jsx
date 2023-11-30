@@ -44,18 +44,20 @@ const Login = ({ setLoggedIn }) => {
     <div>
       <h2>Login</h2>
       <form>
-        <div>
+        <div className='flex flex-col'>
           <label htmlFor="username">Username:</label>
           <input
+            className="input input-bordered input-info w-full max-w-xs"
             type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div>
+        <div className='flex flex-col'>
           <label htmlFor="password">Password:</label>
           <input
+            className="input input-bordered input-info w-full max-w-xs"
             type="password"
             id="password"
             value={password}

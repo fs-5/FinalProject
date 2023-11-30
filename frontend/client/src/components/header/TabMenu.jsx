@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const TabMenu = ({ isLoggedIn }) => {
+const TabMenu = ({ isLoggedIn, userId, username }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedIcon, setSelectedIcon] = useState(getInitialSelectedIcon());
@@ -20,18 +20,27 @@ const TabMenu = ({ isLoggedIn }) => {
 
   const handleIconClick = (iconId) => {
     setSelectedIcon(iconId);
-
   };
 
   const isIconSelected = (iconId) => {
     return selectedIcon === iconId;
   };
 
+  const handleProfileClick = () => {
+    if (isLoggedIn) {
+      // Jika sudah login, arahkan ke halaman profil
+      navigate(`/profile/${userId}/${username}`);
+    } else {
+      // Jika belum login, tampilkan pesan alert dan arahkan ke halaman login setelahnya
+      navigate("/login");
+    }
+  };
+
   return (
     <div>
-      <div class="fixed w-full px-[30px] bottom-0 left-0 bg-blue-500">
-        <nav class="w-full sm:w-[500px] mx-auto p-[15px]">
-          <ul class="flex justify-between items-center">
+      <div className="fixed w-full px-[30px] bottom-0 left-0 bg-blue-500">
+        <nav className="w-full sm:w-[500px] mx-auto p-[15px]">
+          <ul className="flex justify-between items-center">
             <li>
               <Link
                 to="/"
@@ -109,7 +118,7 @@ const TabMenu = ({ isLoggedIn }) => {
                 className={`gap-2 flex flex-col justify-center items-center text-lg font-semibold ${
                   isIconSelected("iconProfile") ? "text-white" : "text-blue-800"
                 } ${isIconSelected("iconProfile")}`}
-                onClick={() => handleIconClick("iconProfile")}
+                onClick={handleProfileClick}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

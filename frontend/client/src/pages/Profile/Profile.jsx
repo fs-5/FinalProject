@@ -85,7 +85,8 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("username");
-    Navigate("/home");
+    Navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -233,15 +234,15 @@ const Profile = () => {
           </form>
         </div>
 
-        <div className="flex justify-center items-center md:pr-[20px] md:justify-end md:flex md:items-start mb-5">
+        <div className="flex flex-col gap-2 mx-[20px] justify-center items-center md:pr-[20px] md:justify-end md:flex md:items-end mb-5">
           <button
-            className="bg-blue-500 text-white w-[150px] p-2 rounded-md hover:bg-blue-700 mr-3"
+            className="bg-blue-500 p-[10px] text-white w-full md:w-[200px] rounded-md hover:bg-blue-700"
             onClick={handleEditSave}
           >
             {isEditing ? "Save" : "Edit"}
           </button>
           <button
-            className="bg-red-500 text-white w-[150px] p-2 rounded-md hover:bg-red-700"
+            className="bg-red-500 p-[10px] text-white w-full md:w-[200px] rounded-md hover:bg-red-700"
             onClick={handleLogout}
           >
             Logout
