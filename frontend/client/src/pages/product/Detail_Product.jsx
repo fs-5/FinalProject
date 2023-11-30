@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 
 const Detail_Product = () => {
-  const { id_product, nama_product, price_product } = useParams();
+  const { id_penginapan, nama_penginapan, harga_penginapan } = useParams();
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ const Detail_Product = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://655cb05b25b76d9884fdcad6.mockapi.io/products/${id_product}`
+          `https://655cb05b25b76d9884fdcad6.mockapi.io/penginapan/${id_penginapan}`
         );
         const data = await response.json();
         setProduct(data);
@@ -22,21 +22,21 @@ const Detail_Product = () => {
     };
 
     fetchData();
-  }, [id_product]);
+  }, [id_penginapan]);
 
   const handleSaveProduct = () => {
     const savedProducts =
       JSON.parse(localStorage.getItem("savedProducts")) || [];
 
     const isProductSaved = savedProducts.some(
-      (savedProduct) => savedProduct.id === id_product
+      (savedProduct) => savedProduct.id === id_penginapan
     );
 
     if (!isProductSaved) {
       savedProducts.push({
-        id: id_product,
-        nama_product: nama_product,
-        harga: price_product,
+        id: id_penginapan,
+        nama_product: nama_penginapan,
+        harga: harga_penginapan,
       });
 
       localStorage.setItem("savedProducts", JSON.stringify(savedProducts));
@@ -55,11 +55,11 @@ const Detail_Product = () => {
 
   return (
     <div className="bg-blue-200 w-full h-[auto]">
-      <nav class="flex  p-5 bg-white shadow-2xl  items-center fixed top-0 left-0 right-0 z-50">
+      <nav className="flex  p-5 bg-white shadow-2xl  items-center fixed top-0 left-0 right-0 z-50">
         <Link to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="fill-main"
+            className="fill-main"
             height="1.6em"
             viewBox="0 0 320 512"
           >
@@ -76,30 +76,30 @@ const Detail_Product = () => {
         <div className="w-full flex justify-start overflow-x-auto mx-auto">
           <img
             className="object-cover object-top w-[500px] h-[300px] py-[20px] px-[20px]"
-            src={product.image_product}
-            alt={product.nama_product}
+            src={product.foto_penginapan1}
+            alt={product.nama_penginapan}
           />
           <img
             className="object-cover object-top w-[500px] h-[300px] py-[20px] px-[20px]"
-            src={product.image_product}
-            alt={product.nama_product}
+            src={product.foto_penginapan2}
+            alt={product.nama_penginapan}
           />
           <img
             className="object-cover object-top w-[500px] h-[300px] py-[20px] px-[20px]"
-            src={product.image_product}
-            alt={product.nama_product}
+            src={product.foto_penginapan3}
+            alt={product.nama_penginapan}
           />
           
         </div>
 
         <div className="p-[20px]">
-          <h1 className="text-[25px] font-bold">{product.nama_product}</h1>
-          <p className="pb-[10px] text-gray-200">{product.lokasi_product}</p>
-          <p className="pb-[10px] italic">{product.deskripsi_product}</p>
+          <h1 className="text-[25px] font-bold">{product.nama_penginapan}</h1>
+          <p className="pb-[10px] text-gray-200">{product.lokasi_penginapan}</p>
+          <p className="pb-[10px] italic">{product.deskripsi_penginapan}</p>
           <p className="pb-[10px]">Kualitas : {product.rating}</p>
-          <p className="pb-[10px]">Kategori tempat : {product.nama_kategori}</p>
+          <p className="pb-[10px]">Kategori tempat : {product.kategori}</p>
           <p className="pb-[10px]">Sisa Kamar : {product.stock}</p>
-          <p className="pb-[10px]">Harga : {product.price_product} Per/Malam</p>
+          <p className="pb-[10px]">Harga : {product.harga_penginapan} Per/Malam</p>
           <p className="pb-[10px]">Fasilitas :</p>
           <p>✅ -- {product.fasilitas1}</p>
           <p>✅ -- {product.fasilitas2}</p>
@@ -119,7 +119,7 @@ const Detail_Product = () => {
             </button>
 
             <Link className=" justify-center items-center flex border-2 bg-blue-800 text-white p-[10px] w-full my-2 rounded-xl hover:bg-blue-950 active:bg-blue-950"
-              to={`/bookingOrder/${id_product}/${nama_product}/${product.price_product}`}
+              to={`/bookingOrder/${id_penginapan}/${nama_penginapan}/${product.harga_penginapan}`}
             >
               <button>
                 Pesan Sekarang

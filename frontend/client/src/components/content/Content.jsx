@@ -8,7 +8,7 @@ const Content = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://655cb05b25b76d9884fdcad6.mockapi.io/products"
+          "https://655cb05b25b76d9884fdcad6.mockapi.io/penginapan"
         );
         const data = await response.json();
         setProducts(data.slice(0, 6)); // Hanya mengambil 6 data pertama
@@ -36,29 +36,29 @@ const Content = () => {
         {products.map((product) => (
           <Link
             key={product.id}
-            to={`/detail_product/${product.id_product}/${product.nama_product}`}
+            to={`/detail_product/${product.id_penginapan}/${product.nama_penginapan}`}
             className="sm:flex md:flex sm:w-[350px] md:w-[350px] sm:rounded-[10px] gap-[20px] w-[250px] h-[auto] bg-white border-[2px] border-blue-300 px-[20px] pt-[20px] pb-[20px] rounded-[10px]"
           >
             <img
               className="mb-[10px] sm:rounded-[10px] sm:w-[150px] rounded-t-[10px] md:w-[150px] w-full h-[200px] object-cover object-top md:object-cover md:object-top lg:object-cover lg:object-top xl-object-cover xl:object-top"
-              src={product.image_product}
+              src={product.foto_penginapan1}
               alt="image-ibis"
             />
             {/* text */}
             <div className="flex flex-col justify-between h-auto">
               <div className="mb-[10px] gap-[10px]">
                 <h1 className="text-blue-800 text-[20px] font-bold">
-                  {product.nama_product}
+                  {product.nama_penginapan}
                 </h1>
                 <h1 className="italic font-semibold text-[15px]">
-                  {product.lokasi_product}
+                  {product.lokasi_penginapan}
                 </h1>
               </div>
 
               <div>
               <p className="font-bold mb-[15px]">{product.rating}</p>
               <h1 className="text-red-600 font-bold">
-                Rp. {product.price_product}
+                Rp. {product.harga_penginapan}
               </h1>
               <h5 className="text-blue-800 font-bold">Per/Malam</h5>
               </div>

@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TabMenu from "../../components/header/TabMenu";
 import Footer from "../../components/footer/Footer";
 
 const Profile = () => {
+  const Navigate = useNavigate();
+
   const [userData, setUserData] = useState({
     username: "",
     email: "",
-    noHP: "",
+    no_hp: "",
     password: "",
   });
+
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Ambil nama pengguna dari local storage
         const storedUsername = localStorage.getItem("username");
 
         if (storedUsername) {
-          // Ambil data pengguna dari API berdasarkan nama pengguna
           const response = await fetch(
             `https://655cb05b25b76d9884fdcad6.mockapi.io/users?username=${storedUsername}`
           );
@@ -28,7 +31,7 @@ const Profile = () => {
             setUserData({
               username: userFromAPI.username,
               email: userFromAPI.email,
-              noHP: userFromAPI.noHP,
+              no_hp: userFromAPI.no_hp,
               password: userFromAPI.password,
             });
           }
@@ -41,17 +44,60 @@ const Profile = () => {
     fetchUserData();
   }, []);
 
+  const handleEditSave = async () => {
+    if (isEditing) {
+      try {
+        // Lakukan permintaan PUT ke backend dengan data pengguna yang diperbarui
+        const response = await fetch(
+          `https://655cb05b25b76d9884fdcad6.mockapi.io/users/${userData.userid}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: userData.username,
+              email: userData.email,
+              no_hp: userData.no_hp,
+              password: userData.password,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          console.log("Data pengguna diperbarui !");
+        } else {
+          console.error("Gagal menyimpan perubahan...");
+        }
+      } catch (error) {
+        console.error("Error updating user data:", error);
+      }
+    }
+
+    // Toggle kembali antara mode pengeditan dan mode tampilan
+    setIsEditing((prevEditing) => !prevEditing);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    Navigate("/home");
+  };
+
   return (
     <div>
       <div className="container w-full mx-auto">
-        {/* info login */}
         <div className="w-full flex bg-white font-medium text-blue-500 p-[20px] justify-center items-center drop-shadow-lg mb-1">
           <div>
             <h1>Info Profil Anda</h1>
           </div>
         </div>
       </div>
-      {/* form */}
+
       <div className="profile container mx-auto">
         <div className="w-[110px] bg-blue-900 my-[30px] p-[30px] rounded-full justify-center items-center mx-auto flex">
           <svg
@@ -63,7 +109,7 @@ const Profile = () => {
             <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
           </svg>
         </div>
-        {/* batas */}
+
         <div className="flex flex-col sm:gap-4 gap-[20px] w-full px-[20px] py-[20px]">
           <form
             className="sm:grid sm:grid-cols-2 sm:gap-4"
@@ -71,12 +117,12 @@ const Profile = () => {
             action=""
             method="post"
           >
-            {/* username */}
+          {/* username */}
             <div className="container flex flex-col mb-[20px]">
               <label className="mb-[10px]" htmlFor="username">
                 Username
               </label>
-              <div className="flex items-center gap-3 border-[1px] border-gray-600 p-[10px] rounded-[10px]">
+              <div className="flex focus:outline-none items-center gap-3 border-[1px] border-gray-600 p-[10px] rounded-[10px]">
                 <svg
                   className="ml-[10px]"
                   xmlns="http://www.w3.org/2000/svg"
@@ -85,19 +131,23 @@ const Profile = () => {
                 >
                   <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
                 </svg>
-                <div className="w-full">
+                <div className="w-full ">
                   <input
-                    className="focus:outline-none text-black py-[5px] px-[10px] w-full"
+                    className={`focus:outline-none focus:outline-blue-300 focus:rounded-sm text-black py-[5px] px-[10px] w-full ${
+                      isEditing ? "" : "cursor-not-allowed"
+                    }`}
                     type="text"
                     name="username"
                     id="username"
                     placeholder="Username"
                     value={userData.username}
-                    readOnly={true}
+                    readOnly={!isEditing}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
             </div>
+
             {/* email */}
             <div className="container flex flex-col mb-[20px]">
               <label className="mb-[10px]" htmlFor="email">
@@ -114,19 +164,20 @@ const Profile = () => {
                 </svg>
                 <div className="w-full">
                   <input
-                    className="focus:outline-none text-black py-[5px] px-[10px] w-full"
+                    className="focus:outline-none focus:outline-blue-300 focus:rounded-sm text-black py-[5px] px-[10px] w-full"
                     type="email"
                     name="email"
                     id="email"
                     value={userData.email}
-                    readOnly={true}
+                    readOnly={!isEditing}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
             </div>
             {/* no hp */}
             <div className="container flex flex-col mb-[20px]">
-              <label className="mb-[10px]" htmlFor="noHP">
+              <label className="mb-[10px]" htmlFor="no_hp">
                 No Hp/Telepon
               </label>
               <div className="flex items-center gap-3 border-[1px] border-gray-600 p-[10px] rounded-[10px]">
@@ -140,12 +191,13 @@ const Profile = () => {
                 </svg>
                 <div className="w-full">
                   <input
-                    className="focus:outline-none text-black py-[5px] px-[10px] w-full"
+                    className="focus:outline-none focus:outline-blue-300 focus:rounded-sm text-black py-[5px] px-[10px] w-full"
                     type="number"
-                    name="noHP"
-                    id="noHP"
-                    value={userData.noHP}
-                    readOnly={true}
+                    name="no_hp"
+                    id="no_hp"
+                    value={userData.no_hp}
+                    readOnly={!isEditing}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -166,19 +218,37 @@ const Profile = () => {
                 </svg>
                 <div className="w-full">
                   <input
-                    className="focus:outline-none text-black py-[5px] px-[10px] w-full"
+                    className="focus:outline-none focus:outline-blue-300 focus:rounded-sm text-black py-[5px] px-[10px] w-full"
                     type="password"
                     name="password"
                     id="password"
                     value={userData.password}
-                    readOnly={true}
+                    readOnly={!isEditing}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
             </div>
+
           </form>
         </div>
+
+        <div className="flex justify-center items-center md:pr-[20px] md:justify-end md:flex md:items-start mb-5">
+          <button
+            className="bg-blue-500 text-white w-[150px] p-2 rounded-md hover:bg-blue-700 mr-3"
+            onClick={handleEditSave}
+          >
+            {isEditing ? "Save" : "Edit"}
+          </button>
+          <button
+            className="bg-red-500 text-white w-[150px] p-2 rounded-md hover:bg-red-700"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
       </div>
+
       <Footer />
       <TabMenu />
     </div>
