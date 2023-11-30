@@ -24,7 +24,7 @@ const Content = () => {
     <div className="w-full flex flex-col items-center">
       {/* batas link */}
       <div className="w-full text-lg font-sans bg-blue-500 text-white px-[20px] py-[10px]">
-        <div className="justify-center flex items-center w-full">
+        <div className="justify- flex items-center w-full">
           <div className="text">
             <p>Rekomendasi Penginapan untuk anda</p>
           </div>
