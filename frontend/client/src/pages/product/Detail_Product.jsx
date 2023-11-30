@@ -49,10 +49,7 @@ const Detail_Product = () => {
 
   if (!product) {
     return <div className="bg-blue-300 w-screen h-screen items-center flex justify-center">
-      <div>
-      <p className="text-[30px] font-bold">Loading...</p>
-      </div>
-        
+      <span className="loading loading-dots loading-lg"></span>  
     </div>;
   }
 
@@ -104,11 +101,11 @@ const Detail_Product = () => {
           <p className="pb-[10px]">Sisa Kamar : {product.stock}</p>
           <p className="pb-[10px]">Harga : {product.price_product} Per/Malam</p>
           <p className="pb-[10px]">Fasilitas :</p>
-          <p>-- {product.fasilitas1}</p>
-          <p>-- {product.fasilitas2}</p>
-          <p>-- {product.fasilitas3}</p>
-          <p>-- {product.fasilitas4}</p>
-          <p>-- {product.fasilitas5}</p>
+          <p>✅ -- {product.fasilitas1}</p>
+          <p>✅ -- {product.fasilitas2}</p>
+          <p>✅ -- {product.fasilitas3}</p>
+          <p>✅ -- {product.fasilitas4}</p>
+          <p>✅ -- {product.fasilitas5}</p>
         </div>
         <Footer />
         {/* batas */}
