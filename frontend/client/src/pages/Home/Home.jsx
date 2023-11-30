@@ -12,10 +12,10 @@ const Home = ({ isLoggedIn }) => {
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (isLoggedIn && storedUsername) {
-      console.log("Setting name to:", storedUsername);
+      console.log("Setting nama:", storedUsername);
       setName(storedUsername);
     } else {
-      console.log("Setting name to Guest");
+      console.log("Setting nama ke Guest");
       setName("Guest");
     }
   }, [isLoggedIn]);

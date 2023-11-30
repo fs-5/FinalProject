@@ -19,17 +19,17 @@ const Routers = ({ isLoggedIn, setLoggedIn, setUsername }) => {
           element={<Home isLoggedIn={isLoggedIn} setUsername={setUsername} />}
         />
         <Route
-          path="/detail_product/:id_product/:nama_product"
+          path="/detail_product/:id_penginapan/:nama_penginapan"
           element={<Detail_Product />}
         />
         <Route
-          path="/bookingOrder/:id_product/:nama_product/:price_product"
+          path="/bookingOrder/:id_penginapan/:nama_penginapan/:harga_penginapan"
           element={<Pesanan />}
         />
         <Route path="/orderlist" element={<OrderList />} />
         <Route path="/savedlist" element={<SavedPage />} />
         <Route
-          path="/profile"
+          path="/profile/:userid/:username"
           element={
             isLoggedIn ? (
               <Profile isLoggedIn={isLoggedIn} setUsername={setUsername} />

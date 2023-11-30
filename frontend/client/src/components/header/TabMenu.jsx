@@ -20,16 +20,8 @@ const TabMenu = ({ isLoggedIn }) => {
 
   const handleIconClick = (iconId) => {
     setSelectedIcon(iconId);
-  };
 
-  // Tambahkan penanganan login di sini
-  if (selectedIcon === "iconProfile" ) {
-    if (isLoggedIn) {
-      navigate("/profile");
-    } else {
-      navigate("/login");
-    }
-  }
+  };
 
   const isIconSelected = (iconId) => {
     return selectedIcon === iconId;
@@ -113,10 +105,10 @@ const TabMenu = ({ isLoggedIn }) => {
 
             <li>
               <Link
-                to="/profile"
+                to="/profile/${userId}/${username}"
                 className={`gap-2 flex flex-col justify-center items-center text-lg font-semibold ${
                   isIconSelected("iconProfile") ? "text-white" : "text-blue-800"
-                }`}
+                } ${isIconSelected("iconProfile")}`}
                 onClick={() => handleIconClick("iconProfile")}
               >
                 <svg
