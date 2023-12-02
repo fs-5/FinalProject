@@ -25,5 +25,13 @@ module.exports = {
         const transaksi = await Transaksi.findById(id)
     
         res.json(transaksi)
+    },
+
+    deleteTransaksiById: async (req, res) => {
+        const{id} = req.params
+        const transaksi = await Transaksi.deleteOne(id)
+
+        res.json(transaksi)
     }
+
 }

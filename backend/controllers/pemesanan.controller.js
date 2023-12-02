@@ -25,5 +25,12 @@ module.exports = {
         const pemesanan = await Pemesanan.findById(id)
     
         res.json(pemesanan)
+    },
+
+    deletePemesananById: async (req, res) => {
+        const{id} = req.params
+        const pemesanan = await Pemesanan.deleteOne(id)
+
+        res.json(pemesanan)
     }
 }

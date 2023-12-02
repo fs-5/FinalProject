@@ -25,5 +25,12 @@ module.exports = {
         const kategori = await Kategori.findById(id)
     
         res.json(kategori)
+    },
+
+    deletekategoriById: async (req, res) => {
+        const{id} = req.params
+        const kategori = await Kategori.deleteOne(id)
+
+        res.json(kategori)
     }
 }
