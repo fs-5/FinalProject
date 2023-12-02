@@ -5,8 +5,8 @@ const verifyToken = require('../middleware/auth');
 
 route.get("/", getAllTransaksi);
 route.get("/:id", verifyToken, getTransaksiById);
-route.post("/", createTransaksi);
-route.delete("/:id", deleteTransaksiById)
+route.post("/:id",verifyToken, createTransaksi);
+route.delete("/:id",verifyToken, deleteTransaksiById)
 route.patch("/:id", verifyToken, editTransaksiById)
 
 module.exports = route;

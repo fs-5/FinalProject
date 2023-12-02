@@ -5,8 +5,8 @@ const verifyToken = require("../middleware/auth");
 
 route.get("/", getAllPemesanan);
 route.get("/:id", verifyToken, getPemesananById);
-route.post("/", createPemesanan);
-route.delete("/:id", deletePemesananById)
+route.post("/:id", verifyToken ,createPemesanan);
+route.delete("/:id", verifyToken ,deletePemesananById)
 route.patch("/:id", verifyToken, editPemesananById)
 
 module.exports = route;
