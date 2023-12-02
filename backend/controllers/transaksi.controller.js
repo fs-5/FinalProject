@@ -32,6 +32,13 @@ module.exports = {
         const transaksi = await Transaksi.deleteOne(id)
 
         res.json(transaksi)
+    },
+
+    editTransaksiById : async (req, res) => {
+        const{id} = req.params
+        const transaksi = await Transaksi.findOneAndUpdate(id, req.body, {new:true})
+
+        res.json(transaksi)
     }
 
 }

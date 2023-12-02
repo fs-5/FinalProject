@@ -32,5 +32,12 @@ module.exports = {
         const kategori = await Kategori.deleteOne(id)
 
         res.json(kategori)
+    },
+
+    editKategoriById : async (req, res) => {
+        const{id} = req.params
+        const kategori = await Kategori.findOneAndUpdate(id, req.body, {new:true})
+
+        res.json(kategori)
     }
 }
