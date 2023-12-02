@@ -8,6 +8,6 @@ route.get("/", getAllKategori);
 route.get("/:id", verifyToken, getkategoriById);
 route.post("/", createKategori);
 route.delete("/:id", verifyToken, deletekategoriById)
-route.put("/:id", editKategoriById)
+route.patch("/:id", editKategoriById)
 
 module.exports = route

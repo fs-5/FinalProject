@@ -7,6 +7,6 @@ route.get("/", getAllTransaksi);
 route.get("/:id", verifyToken, getTransaksiById);
 route.post("/", createTransaksi);
 route.delete("/:id", deleteTransaksiById)
-route.put("/:id", verifyToken, editTransaksiById)
+route.patch("/:id", verifyToken, editTransaksiById)
 
 module.exports = route;

@@ -7,6 +7,6 @@ route.get("/", getAllPemesanan);
 route.get("/:id", verifyToken, getPemesananById);
 route.post("/", createPemesanan);
 route.delete("/:id", deletePemesananById)
-route.put("/:id", verifyToken, editPemesananById)
+route.patch("/:id", verifyToken, editPemesananById)
 
 module.exports = route;
