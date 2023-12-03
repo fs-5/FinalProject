@@ -90,7 +90,7 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="container w-full mx-auto">
         <div className="w-full flex bg-white font-medium text-blue-500 p-[20px] justify-center items-center drop-shadow-lg mb-1">
           <div>

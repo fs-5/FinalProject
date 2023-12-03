@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Routers from "../routers/Routers";
-import Home from "../pages/Home/Home"; // Import halaman Home
 
 const Layout = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);

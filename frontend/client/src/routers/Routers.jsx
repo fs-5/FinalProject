@@ -9,6 +9,7 @@ import Profile from "../pages/Profile/Profile";
 import Detail_Product from "../pages/product/Detail_Product";
 import Pesanan from "../pages/Pesanan/Pesanan";
 import Login from "../pages/Form/Login";
+import Register from "../pages/Form/Register";
 
 const Routers = ({ isLoggedIn, setLoggedIn, setUsername }) => {
   return (
@@ -39,6 +40,7 @@ const Routers = ({ isLoggedIn, setLoggedIn, setUsername }) => {
           }
         />
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
+        <Route path="/register" element={ <Register/>} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>

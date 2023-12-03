@@ -1,7 +1,7 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect,forwardRef } from "react";
 import { Link } from "react-router-dom";
 
-const Content = forwardRef((props, ref) => {
+const ContentVilla = forwardRef((props, ref) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -21,12 +21,12 @@ const Content = forwardRef((props, ref) => {
   }, []);
 
   return (
-    <div  ref={ref} className="w-full flex flex-col items-center">
+    <div ref={ref} className="w-full flex flex-col items-center">
       {/* batas link */}
       <div className="w-full text-lg font-sans bg-blue-500 text-white px-[20px] py-[10px]">
         <div className="justify-center flex items-center w-full">
           <div className="text">
-            <p>Rekomendasi Hotel untuk anda</p>
+            <p>Rekomendasi Villa untuk anda</p>
           </div>
         </div>
       </div>
@@ -68,6 +68,7 @@ const Content = forwardRef((props, ref) => {
       </div>
     </div>
   );
+
 });
 
-export default Content;
+export default ContentVilla;
