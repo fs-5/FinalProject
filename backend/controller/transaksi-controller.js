@@ -25,5 +25,38 @@ module.exports = {
         const transaksi = await Transaksi.findById(id)
     
         res.json(transaksi)
-    }
+    },
+
+    editTransaksiById: async (req,res) => {
+        try {
+            const { id } = req.params;
+            const updateFields = req.body; // Data yang akan diperbarui
+        
+            const transaksi = await Transaksi.findByIdAndUpdate(id, updateFields, { new: true });
+        
+            if (!transaksi) {
+              return res.status(404).json({ error: 'Transaksi tidak ditemukan' });
+            }
+        
+            res.json({ message: 'Transaksi berhasil diupdate', data: transaksi });
+          } catch (error) {
+            console.error('Terjadi kesalahan:', error);
+            res.status(500).json({ error: 'Terjadi kesalahan internal server' });
+          }
+        },
+        deleteTransaksiById: async (req, res) => {
+            try {
+              const { id } = req.params;
+              const result = await Transaksi.deleteOne({ _id: id });
+          
+              if (result.deletedCount === 0) {
+                return res.status(404).json({ error: 'Transaksi tidak ditemukan' });
+              }
+          
+              res.json({ message: 'Transaksi berhasil dihapus' });
+            } catch (error) {
+              console.error('Terjadi kesalahan:', error);
+              res.status(500).json({ error: 'Terjadi kesalahan internal server' });
+            }
+          }
 }

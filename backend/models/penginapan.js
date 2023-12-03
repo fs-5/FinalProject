@@ -21,6 +21,10 @@ const penginapanSchema = new mongoose.Schema({
         enum: ['hotel', 'villa', 'kostan'], 
         required: true,
     },
+    pemesanans: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pemesanan'
+      }],
 
 });
 
