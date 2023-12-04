@@ -8,7 +8,10 @@ import kamarkita from "../../assets/kamarkitahead.png";
 const Wallpaper = forwardRef(
   ({ scrollToContent, scrollToContentVilla, scrollToContentKostan }, ref) => {
     return (
-      <div className="sm:items-center sm:flex md:flex md:w-full sm:w-full" ref={ref}>
+      <div
+        className="sm:items-center sm:flex md:flex md:w-full sm:w-full"
+        ref={ref}
+      >
         {/* Bagian Carousel */}
         <section className="w-full">
           <div className="carousel w-full bg-blue-200 py-3">
@@ -57,16 +60,19 @@ const Wallpaper = forwardRef(
           <div className="flex flex-col items-center mx-auto container w-full p-[10px] text-white gap-2">
             <img className="hidden sm:block" src={kamarkita} alt="kamarkita" />
             <h2 className="text-blue-500">Lokasi anda saat ini :</h2>
-            <select className="select select-bordered w-full max-w-xs text-white bg-blue-400">
-              <option disabled selected>
+            <select
+              className="select select-bordered w-full max-w-xs text-white bg-blue-400"
+              defaultValue=""
+            >
+              <option disabled value="">
                 Pilih Lokasi Anda
               </option>
-              <option>Jakarta</option>
-              <option>Bogor</option>
-              <option>Depok</option>
-              <option>Tangerang</option>
-              <option>Bekasi</option>
-              <option>Bandung</option>
+              <option value="Jakarta">Jakarta</option>
+              <option value="Bogor">Bogor</option>
+              <option value="Depok">Depok</option>
+              <option value="Tangerang">Tangerang</option>
+              <option value="Bekasi">Bekasi</option>
+              <option value="Bandung">Bandung</option>
             </select>
           </div>
           <section
@@ -74,7 +80,10 @@ const Wallpaper = forwardRef(
             ref={ref}
           >
             <h1 className="py-[10px]">Mau menginap dimana ?</h1>
-            <div className="flex w-full gap-5 p-[10px] text-lg bg-blue-300 sm:bg-white items-center justify-center" ref={ref}>
+            <div
+              className="flex w-full gap-5 p-[10px] text-lg bg-blue-300 sm:bg-white items-center justify-center"
+              ref={ref}
+            >
               <button
                 id="buttonHotel"
                 onClick={scrollToContent}

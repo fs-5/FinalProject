@@ -1,13 +1,16 @@
 // App.jsx
-import React from 'react';
-import Layout from './Layout/Layout';
+import React from "react";
+import Layout from "./Layout/Layout";
+import { SavedProductsProvider } from "./pages/Context/SavedProductsContext";
 
 const App = () => {
   return (
     <div>
-    <Layout/>
+      <SavedProductsProvider>
+        <Layout />
+      </SavedProductsProvider>
     </div>
   );
-}
+};
 
 export default App;

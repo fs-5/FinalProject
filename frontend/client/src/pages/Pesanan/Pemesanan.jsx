@@ -1,10 +1,15 @@
-// Pesanan.jsx
-import React, { useState } from "react";
+// Pemesanan.jsx
+import React from "react";
 import { useParams, Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 
-const Pesanan = () => {
-  const { id_product, nama_product, price_product } = useParams();
+const Pemesanan = () => {
+  // Menggunakan useParams untuk mendapatkan parameter dari URL
+  const { id_penginapan, nama_penginapan, harga_penginapan } = useParams();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     nama: "",
     alamat: "",
@@ -13,6 +18,8 @@ const Pesanan = () => {
     tipe_kamar: "",
     jumlah_hari: 1, // Default 1 hari
     tanggal_menginap: "",
+    jumlah_tamu: 1,
+    metode_pembayaran: "",
   });
 
   const handleInputChange = (e) => {
@@ -24,14 +31,23 @@ const Pesanan = () => {
   };
 
   const handleBayarSekarang = () => {
-    // Implementasikan logika pembayaran sesuai kebutuhan
-    alert("Proses pembayaran dilakukan!");
+    const dataPemesanan = { ...formData, nama_penginapan, harga_penginapan };
+    console.log("Data Pemesanan:", dataPemesanan);
+
+    localStorage.setItem("dataPemesanan", JSON.stringify(dataPemesanan));
+
+    navigate(`/konfirmasi_pembayaran/${id_penginapan}`, {
+      state: {
+        nama_penginapan,
+        harga_penginapan,
+      },
+    });
   };
 
   return (
-    <div className="w-full h-auto bg-blue-200 flex flex-col gap-[20px]">
+    <div>
       <nav class="flex  p-5 bg-white shadow-2xl  items-center fixed top-0 left-0 right-0 z-50">
-        <Link to={`/detail_product/${id_product}/${nama_product}`}>
+        <Link to={"/"}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="fill-main"
@@ -46,29 +62,34 @@ const Pesanan = () => {
         </div>
       </nav>
       <br />
-      {/* batas nav */}
+      <br />
+
       <div className="pt-[30px] px-[20px]">
         <div className="w-full flex justify-center text-[20px] font-bold pb-[10px]">
           <h1>Silakan Isi Data Pesanan Anda.</h1>
         </div>
+      </div>
 
+      <div className="container bg-blue-200 p-[20px] mb-[10px]">
         <table className="table-auto">
           <tbody>
-            <tr >
+            <tr>
               <td className="font-bold">Nama Penginapan </td>
-              <td className="pl-[10px]"> : {nama_product}</td>
+              <td className="pl-[10px]"> : {nama_penginapan}</td>
             </tr>
             <tr>
               <td className="font-bold">Harga</td>
-              <td className="pl-[10px]"> : {price_product} per/malam</td>
+              <td className="pl-[10px]"> : {harga_penginapan} per/malam</td>
             </tr>
           </tbody>
         </table>
-
-        <br />
       </div>
 
-      <form className="sm:grid sm:grid-cols-2 gap-4 px-[20px]">
+      {/* form */}
+      <form
+        className="sm:grid sm:grid-cols-2 gap-4 px-[20px] mb-[20px]"
+        onSubmit={handleBayarSekarang}
+      >
         <div>
           <label className="block">
             Tanggal Menginap:
@@ -184,6 +205,22 @@ const Pesanan = () => {
             </select>
           </label>
         </div>
+
+        <div>
+          <label className="block">
+            Metode Pembayaran:
+            <select
+              name="metode_pembayaran"
+              value={formData.metode_pembayaran}
+              onChange={handleInputChange}
+              className="mt-1 p-2 border rounded-md w-full"
+            >
+              <option value="transfer_bank">Transfer Bank</option>
+              <option value="e_wallet">E-Wallet</option>
+              <option value="bayar_tunai">Bayar Tunai</option>
+            </select>
+          </label>
+        </div>
       </form>
 
       <Footer />
@@ -191,16 +228,17 @@ const Pesanan = () => {
       <section class="fixed bottom-0 left-0 right-0 bg-white ">
         <div class="w-full gap-[10px] md:px-[50px] lg:px-[50px] flex justify-center items-center flex-col p-2 md:flex md:flex-row lg:flex lg:flex-row">
           <Link
-            to={`/detail_product/${id_product}/${nama_product}`}
+            to={`/`}
             className="justify-center items-center flex border-2 bg-white text-blue-500 p-[10px] w-full my-2 rounded-xl hover:bg-blue-950 active:bg-blue-950"
           >
             <button>Kembali</button>
           </Link>
 
-          <Link className="justify-center items-center flex border-2 bg-blue-800 text-white p-[10px] w-full my-2 rounded-xl hover:bg-blue-950 active:bg-blue-950">
-            <button onClick={handleBayarSekarang} onclick="submitdata()">
-              Bayar Sekarang
-            </button>
+          <Link
+            to={`/konfirmasi_pembayaran/${id_penginapan}/${nama_penginapan}/${harga_penginapan}`}
+            className="justify-center items-center flex border-2 bg-blue-800 text-white p-[10px] w-full my-2 rounded-xl hover:bg-blue-950 active:bg-blue-950"
+          >
+            <button onClick={handleBayarSekarang}>Bayar Sekarang</button>
           </Link>
         </div>
       </section>
@@ -208,4 +246,4 @@ const Pesanan = () => {
   );
 };
 
-export default Pesanan;
+export default Pemesanan;

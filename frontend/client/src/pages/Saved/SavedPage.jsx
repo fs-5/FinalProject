@@ -4,8 +4,10 @@ import TabMenu from "../../components/header/TabMenu";
 import Footer from "../../components/footer/Footer";
 import { Link } from "react-router-dom";
 
+
 const SavedPage = () => {
   const [savedProducts, setSavedProducts] = useState([]);
+  
 
   useEffect(() => {
     const savedProductsFromStorage =

@@ -7,9 +7,10 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import SavedPage from "../pages/Saved/SavedPage";
 import Profile from "../pages/Profile/Profile";
 import Detail_Product from "../pages/product/Detail_Product";
-import Pesanan from "../pages/Pesanan/Pesanan";
 import Login from "../pages/Form/Login";
 import Register from "../pages/Form/Register";
+import Pemesanan from "../pages/Pesanan/Pemesanan";
+import KonfirmasiPembayaran from "../pages/Pesanan/KonfirmasiPembayaran";
 
 const Routers = ({ isLoggedIn, setLoggedIn, setUsername }) => {
   return (
@@ -24,8 +25,12 @@ const Routers = ({ isLoggedIn, setLoggedIn, setUsername }) => {
           element={<Detail_Product />}
         />
         <Route
-          path="/bookingOrder/:id_penginapan/:nama_penginapan/:harga_penginapan"
-          element={<Pesanan />}
+          path="/pemesanan/:id_penginapan/:nama_penginapan/:harga_penginapan"
+          element={<Pemesanan/>}
+        />
+        <Route 
+        path="/konfirmasi_pembayaran/:id_penginapan/:nama_penginapan/:harga_penginapan"
+        element={<KonfirmasiPembayaran/>}
         />
         <Route path="/orderlist" element={<OrderList />} />
         <Route path="/savedlist" element={<SavedPage />} />

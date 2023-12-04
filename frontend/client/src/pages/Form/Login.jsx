@@ -125,7 +125,7 @@ const Login = ({ setLoggedIn }) => {
         {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
 
-        <div className="container mb-[20px] justify-center items-center flex">
+        <div className="container mb-[20px] justify-center mx-auto items-center flex">
             <div className="flex">
               <p className="mr-[5px]">Belum Punya Akun ? </p>
               <Link className="text-blue-500" to={"/register"}>

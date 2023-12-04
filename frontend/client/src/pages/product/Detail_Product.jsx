@@ -2,11 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
+import { useProductContext } from "../Context/ProductContext";
+import { useSavedProducts } from "../Context/SavedProductsContext";
 
 const Detail_Product = () => {
-  const { id_penginapan, nama_penginapan, harga_penginapan } = useParams();
-  const [product, setProduct] = useState(null);
+  const { id_penginapan } = useParams();
+  const { products } = useProductContext();
+  const { savedProducts, dispatch } = useSavedProducts();
   const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,32 +30,39 @@ const Detail_Product = () => {
   }, [id_penginapan]);
 
   const handleSaveProduct = () => {
-    const savedProducts =
-      JSON.parse(localStorage.getItem("savedProducts")) || [];
-
     const isProductSaved = savedProducts.some(
       (savedProduct) => savedProduct.id === id_penginapan
     );
 
     if (!isProductSaved) {
-      savedProducts.push({
+      const newProduct = {
         id: id_penginapan,
-        nama_product: nama_penginapan,
-        harga: harga_penginapan,
-      });
+        nama_product: product?.nama_penginapan,
+        harga_penginapan: product?.harga_penginapan,
+      };
 
-      localStorage.setItem("savedProducts", JSON.stringify(savedProducts));
+      dispatch({ type: 'ADD_PRODUCT', payload: newProduct });
+
+      // Kirimkan aksi baru untuk menyimpan ID produk yang dipilih
+      dispatch({ type: 'SET_SELECTED_PRODUCT', payload: id_penginapan });
+
+      localStorage.setItem(
+        'savedProducts',
+        JSON.stringify([...savedProducts, newProduct])
+      );
 
       navigate("/savedlist");
     } else {
-      alert("Produk sudah disimpan!");
+      alert('Produk sudah disimpan!');
     }
   };
 
   if (!product) {
-    return <div className="bg-blue-300 w-screen h-screen items-center flex justify-center">
-      <span className="loading loading-dots loading-lg"></span>  
-    </div>;
+    return (
+      <div className="bg-blue-300 w-screen h-screen items-center flex justify-center">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
   }
 
   return (
@@ -76,36 +88,37 @@ const Detail_Product = () => {
         <div className="w-full flex justify-start overflow-x-auto mx-auto">
           <img
             className="object-cover object-top w-[500px] h-[300px] py-[20px] px-[20px]"
-            src={product.foto_penginapan1}
-            alt={product.nama_penginapan}
+            src={product?.foto_penginapan1}
+            alt={product?.nama_penginapan}
           />
           <img
             className="object-cover object-top w-[500px] h-[300px] py-[20px] px-[20px]"
-            src={product.foto_penginapan2}
-            alt={product.nama_penginapan}
+            src={product?.foto_penginapan2}
+            alt={product?.nama_penginapan}
           />
           <img
             className="object-cover object-top w-[500px] h-[300px] py-[20px] px-[20px]"
-            src={product.foto_penginapan3}
-            alt={product.nama_penginapan}
+            src={product?.foto_penginapan3}
+            alt={product?.nama_penginapan}
           />
-          
         </div>
 
         <div className="p-[20px]">
-          <h1 className="text-[25px] font-bold">{product.nama_penginapan}</h1>
-          <p className="pb-[10px] text-gray-200">{product.lokasi_penginapan}</p>
-          <p className="pb-[10px] italic">{product.deskripsi_penginapan}</p>
-          <p className="pb-[10px]">Kualitas : {product.rating}</p>
-          <p className="pb-[10px]">Kategori tempat : {product.kategori}</p>
-          <p className="pb-[10px]">Sisa Kamar : {product.stock}</p>
-          <p className="pb-[10px]">Harga : {product.harga_penginapan} Per/Malam</p>
+          <h1 className="text-[25px] font-bold">{product?.nama_penginapan}</h1>
+          <p className="pb-[10px] text-gray-200">{product?.lokasi_penginapan}</p>
+          <p className="pb-[10px] italic">{product?.deskripsi_penginapan}</p>
+          <p className="pb-[10px]">Kualitas : {product?.rating}</p>
+          <p className="pb-[10px]">Kategori tempat : {product?.kategori}</p>
+          <p className="pb-[10px]">Sisa Kamar : {product?.stock}</p>
+          <p className="pb-[10px]">
+            Harga : {product?.harga_penginapan} Per/Malam
+          </p>
           <p className="pb-[10px]">Fasilitas :</p>
-          <p>✅ -- {product.fasilitas1}</p>
-          <p>✅ -- {product.fasilitas2}</p>
-          <p>✅ -- {product.fasilitas3}</p>
-          <p>✅ -- {product.fasilitas4}</p>
-          <p>✅ -- {product.fasilitas5}</p>
+          <p>✅ -- {product?.fasilitas1}</p>
+          <p>✅ -- {product?.fasilitas2}</p>
+          <p>✅ -- {product?.fasilitas3}</p>
+          <p>✅ -- {product?.fasilitas4}</p>
+          <p>✅ -- {product?.fasilitas5}</p>
         </div>
         <Footer />
         {/* batas */}
@@ -118,12 +131,11 @@ const Detail_Product = () => {
               Pesan Nanti
             </button>
 
-            <Link className=" justify-center items-center flex border-2 bg-blue-800 text-white p-[10px] w-full my-2 rounded-xl hover:bg-blue-950 active:bg-blue-950"
-              to={`/bookingOrder/${id_penginapan}/${nama_penginapan}/${product.harga_penginapan}`}
+            <Link
+              className=" justify-center items-center flex border-2 bg-blue-800 text-white p-[10px] w-full my-2 rounded-xl hover:bg-blue-950 active:bg-blue-950"
+              to={`/pemesanan/${id_penginapan}/${product?.nama_penginapan}/${product?.harga_penginapan}`}
             >
-              <button>
-                Pesan Sekarang
-              </button>
+              <button>Pesan Sekarang</button>
             </Link>
           </div>
         </section>
