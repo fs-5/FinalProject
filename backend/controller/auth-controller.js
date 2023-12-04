@@ -30,10 +30,10 @@ module.exports = {
     }, 
     regis: async (req, res) => {
         try {
-            const { nama, username, email, no_telpon, password } = req.body;
+            const { nama, username, email, noTelpon, password } = req.body;
       
             // Cek apakah semua field yang dibutuhkan disertakan
-            if (!nama || !username || !email || !no_telpon || !password) {
+            if (!nama || !username || !email || !noTelpon || !password) {
               return res.status(400).json({ error: 'Semua field harus diisi' });
             }
       
@@ -44,7 +44,7 @@ module.exports = {
             }
       
             // Buat instansi user baru
-            const newUser = new User({ nama, username, email, no_telpon, password });
+            const newUser = new User({ nama, username, email, noTelpon, password });
       
             // Simpan user ke database
             await newUser.save();

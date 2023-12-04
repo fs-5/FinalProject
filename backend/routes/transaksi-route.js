@@ -3,7 +3,7 @@ const { getTransaksiById, getAllTransaksi, createTransaksi, editTransaksiById, d
 const route = express.Router()
 const verifyToken = require('../middleware/auth');
 
-route.get("/", getAllTransaksi);
+route.get("/", verifyToken, getAllTransaksi);
 route.get("/:id", verifyToken, getTransaksiById);
 route.post("/",verifyToken, createTransaksi);
 route.delete("/:id",verifyToken, deleteTransaksiById)

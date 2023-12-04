@@ -1,4 +1,6 @@
 const Pemesanan = require('../models/pemesanan');
+const mongoose = require('mongoose');
+
 
 module.exports = {
     getAllPemesanan: async (req, res) =>{
@@ -23,12 +25,35 @@ module.exports = {
         })
     },
 
-    getPemesananById: async (req, res) =>{
-        const {id} = req.params
-        const pemesanan = await Pemesanan.findById(id)
-    
-        res.json(pemesanan)
-    },
+    validateObjectId: (req, res, next) => {
+        const { id } = req.params;
+        console.log('ID:', id); // Tambahkan log ini
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+          return res.status(400).json({ error: 'Format ID tidak valid' });
+        }
+        next();
+      },
+      
+
+      getPemesananById: async (req, res) => {
+        try {
+          const { id } = req.params;
+          console.log('ID Pemesanan:', id);
+          
+          const pemesanan = await Pemesanan.find({ userId: id }); // Ganti sesuai dengan kriteria yang sesuai
+      
+          if (!pemesanan || pemesanan.length === 0) {
+            return res.status(404).json({ error: 'Pemesanan tidak ditemukan' });
+          }
+      
+          res.json(pemesanan);
+        } catch (error) {
+          console.error('Terjadi kesalahan:', error);
+          res.status(500).json({ error: 'Terjadi kesalahan internal server', details: error.message });
+        }
+      },
+      
+
     deletePemesananById: async (req, res) => {
         try {
           const { id } = req.params;

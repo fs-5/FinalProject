@@ -1,12 +1,20 @@
 const mongoose = require("mongoose");
 
 const penginapanSchema = new mongoose.Schema({
-    nama_penginapan: String,
-    lokasi_penginapan: String,
-    harga_penginapan: Number,
-    deskripsi_penginapan: String,
-    foto_penginapan: String,
-    fasilitas_penginapan: String,
+    namaPenginapan: String,
+    kodeLokasi: String,
+    lokasiPenginapan: String,
+    hargaPenginapan: Number,
+    deskripsiPenginapan: String,
+    fotoPenginapan1: String,
+    fotoPenginapan2: String,
+    fotoPenginapan3: String,
+    fasilitas1: String,
+    fasilitas2: String,
+    fasilitas3: String,
+    fasilitas4: String,
+    fasilitas5: String,
+    stock: String,
     rating: String,
     userID: {
         type: mongoose.ObjectId,

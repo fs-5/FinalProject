@@ -60,32 +60,35 @@ module.exports = {
             });
         }
     },
-        createPenginapan: async (req, res) => {
-            console.log('Request Body:', req.body);
-            try {
-                // Ambil data penginapan dari body permintaan
-                const data = req.body;
-
-                // Ambil path gambar dari unggahan menggunakan Multer
-                const fotoPath = req.file ? req.file.path : '';
-
-                console.log('File information:', req.file); // Log ini akan menampilkan informasi file di konsol
-
-                // Tambahkan path foto ke data penginapan
-                data.foto_penginapan = fotoPath;
-
-                // Buat penginapan baru
-                await Penginapan.create(data);
-
-                res.json({
-                    message: 'Berhasil Menambahkan penginapan',
-                });
-            } catch (error) {
-                console.error(error);
-                res.status(500).json({
-                    error: 'Terjadi Kesalahan Internal Server',
-                });
-            }
+    createPenginapan: async (req, res) => {
+        console.log('Request Body:', req.body);
+        try {
+            const data = req.body;
+            const fotoPaths = req.files; // Mengambil paths dari semua foto yang diunggah
+    
+            // Mengonversi array fasilitas1 menjadi string dengan pemisah koma
+    
+    
+            console.log('File information:', fotoPaths);
+    
+            // Masing-masing foto memiliki path yang berbeda
+            data.fotoPenginapan1 = fotoPaths['fotoPenginapan1'][0].path;
+            data.fotoPenginapan2 = fotoPaths['fotoPenginapan2'][0].path;
+            data.fotoPenginapan3 = fotoPaths['fotoPenginapan3'][0].path;
+    
+            // Buat penginapan baru
+            await Penginapan.create(data);
+    
+            res.json({
+                message: 'Berhasil Menambahkan penginapan',
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                error: 'Terjadi Kesalahan Internal Server',
+            });
         }
+    }
+    
 
     }

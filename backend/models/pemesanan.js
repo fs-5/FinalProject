@@ -9,11 +9,11 @@ const pemesananSchema = new mongoose.Schema({
     type: mongoose.ObjectId,
     ref: 'Penginapan'
   },
-  Tanggal: Date,
-  Durasi: String,
-  JumlahTamu: String,
-  TypeKamar: String,
-  MetodePembayaran: String
+  tanggal: Date,
+  jumlahHari: String,
+  jumlahTamu: String,
+  typeKamar: String,
+  metodePembayaran: String
 });
 
 const Pemesanan = mongoose.model('Pemesanan', pemesananSchema);

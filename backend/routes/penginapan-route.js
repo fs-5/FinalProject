@@ -18,6 +18,10 @@ const upload = multer({storage: storage})
 route.get("/" , getAllPenginapan)
 route.get("/kategori/:kategori" , verifyToken, getAllPenginapanByCategory)
 route.get("/:id" , verifyToken, getPenginapanById)
-route.post("/" ,verifyToken, upload.single('foto_penginapan'), createPenginapan)
+route.post("/" ,verifyToken, upload.fields([
+    { name: 'fotoPenginapan1', maxCount: 1 },
+    { name: 'fotoPenginapan2', maxCount: 1 },
+    { name: 'fotoPenginapan3', maxCount: 1 }
+]), createPenginapan)
 
 module.exports = route
