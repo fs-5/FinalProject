@@ -25,3 +25,4 @@ route.post("/" ,verifyToken, upload.fields([
 ]), createPenginapan)
 
 module.exports = route
+
