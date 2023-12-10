@@ -1,27 +1,26 @@
-const express = require('express');
-const cors = require('cors');
-const db = require('./config/db');
-const allRoutes = require('./routes');
+const express = require ('express')
+const cors = require("cors")
 
-const app = express();
-const PORT = process.env.PORT || 4000;
+const db = require("./config/db")
+const allRoutes = require("./routes")
+
+const app = express()
+const PORT = process.env.PORT || 4000
+
 
 db.then(() => {
-  console.log('berhasil konek ke mongodb');
-}).catch(() => {
-  console.log('gagal konek ke mongodb');
-});
-
-app.use(cors());
-app.use(express.json());
-app.use(allRoutes);
-
-// Hanya jalankan server jika tidak di Vercel
-if (!process.env.NOW_REGION) {
-  app.listen(PORT, () => {
-    console.log('SERVER RUNNING ON PORT ' + PORT);
-  });
-}
+    console.log("berhasil konek ke mongodb");
+})
+.catch(() => {
+    console.log("gagal konek ke mongodb");
+})
 
 
-module.exports = app;
+
+app.use(cors())
+app.use(express.json())
+app.use(allRoutes)
+
+app.listen(PORT ,() => {
+    console.log('SERVER RUNNING ON PORT ' + PORT)
+})
