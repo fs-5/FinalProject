@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 
-const whishlistSchema = new mongoose.Schema({
-    penginapanId: {
-     type: mongoose.ObjectId,
-     ref: 'penginapan' 
-    },
-    userId: {
-     type: mongoose.ObjectId,
-     ref: 'User'
-    }
- }, { collection: 'whishlists' });
- 
+const wishlistSchema = new mongoose.Schema({
+  penginapanId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Penginapan',
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }
+}, { collection: 'wishlists' });
 
-const Whishlist = mongoose.model('Whishlist', whishlistSchema);
+const Wishlist = mongoose.model('Wishlist', wishlistSchema);
 
-module.exports = Whishlist;
+module.exports = Wishlist;

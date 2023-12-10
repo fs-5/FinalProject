@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const transaksiSchema = new mongoose.Schema({
-    AdminFee: Number,
-    Total: Number,
+    AdminFee: String,
+    Total: String,
     pemesananId: {
         type: mongoose.ObjectId,
         ref: 'Pemesanan'
