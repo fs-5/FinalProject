@@ -1,11 +1,11 @@
 const express = require ('express')
-// const cors = require("cors")
+const cors = require("cors")
 
 const db = require("./config/db")
 const allRoutes = require("./routes")
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 4000
 
 
 db.then(() => {
@@ -15,7 +15,9 @@ db.then(() => {
     console.log("gagal konek ke mongodb");
 })
 
-// app.use(cors())
+
+
+app.use(cors())
 app.use(express.json())
 app.use(allRoutes)
 

@@ -7,3 +7,6 @@
     const db = mongoose.connect(db_url)
 
     module.exports = db
+
+    
+    
